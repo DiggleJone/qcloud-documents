@@ -119,4 +119,3 @@ func verify(stub shim.ChaincodeStubInterface, args []string) (string, error) {
 	}
 }
 ```
-

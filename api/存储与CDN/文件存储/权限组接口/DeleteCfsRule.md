@@ -1,5 +1,4 @@
 ## 接口描述
-
 本接口（DeleteCfsRule）用于删除规则。
 接口请求域名：`cfs.api.qcloud.com`
 
@@ -37,7 +36,7 @@ https://cfs.test.api.qcloud.com/v2/index.php?Action=DeleteCfsRule
 
 #### 输出
 
-```plaintext
+```
 {
     "code": 0,
     "message": "",
@@ -47,6 +46,7 @@ https://cfs.test.api.qcloud.com/v2/index.php?Action=DeleteCfsRule
         "PGroupId": "pgroup-atutdqup"
     }
 }
+
 ```
 
 

@@ -1,10 +1,9 @@
 ## 功能描述
 
 DELETE Multiple Objects 接口请求可以批量删除指定存储桶中的多个对象（Object），单次请求支持最多删除1000个对象。对于响应结果，COS 提供 Quiet 模式和 Verbose 模式：
-
 - Quiet 模式在响应中仅包含删除失败的对象信息和错误信息。
 - Verbose 模式在响应中包含每个对象的删除结果信息。
-
+ 
 该 API 的请求者需要对存储桶有写入权限。
 
 #### 版本控制
@@ -19,7 +18,7 @@ DELETE Multiple Objects 接口请求可以批量删除指定存储桶中的多�
 
 #### 请求示例
 
-```plaintext
+```shell
 POST /?delete HTTP/1.1
 Host: <BucketName-APPID>.cos.<Region>.myqcloud.com
 Date: GMT Date
@@ -31,7 +30,7 @@ Authorization: Auth String
 [Request Body]
 ```
 
-> ? Authorization: Auth String （详情请参见 [请求签名](https://cloud.tencent.com/document/product/436/7778) 文档）。
+>? Authorization: Auth String （详情请参见 [请求签名](https://cloud.tencent.com/document/product/436/7778) 文档）。
 
 #### 请求参数
 
@@ -39,13 +38,17 @@ Authorization: Auth String
 
 #### 请求头
 
-此接口仅使用公共请求头部，详情请参见 [公共请求头部](https://cloud.tencent.com/document/product/436/7728) 文档。
+此接口除使用公共请求头部外，还支持以下请求头部，了解公共请求头部详情请参见 [公共请求头部](https://cloud.tencent.com/document/product/436/7728) 文档。
+
+| 名称 | 描述 | 类型 | 是否必选 |
+| --- | --- | --- | --- |
+| Content-MD5 | RFC 1864 中定义的经过 Base64 编码的请求体内容 MD5 哈希值，用于完整性检查，验证请求体在传输过程中是否发生变化 | string | 是 |
 
 #### 请求体
 
 提交 **application/xml** 请求数据，包含要删除的对象信息。
 
-```xml
+```shell
 <Delete>
 	<Quiet>boolean</Quiet>
 	<Object>
@@ -60,23 +63,23 @@ Authorization: Auth String
 
 具体的节点描述如下：
 
-| 节点名称（关键字） | 父节点 | 描述                                            | 类型      | 是否必选 |
-| ------------------ | ------ | ----------------------------------------------- | --------- | -------- |
-| Delete             | 无     | 包含 DELETE Multiple Objects 操作的所有请求信息 | Container | 是       |
+| 节点名称（关键字） | 父节点 | 描述 | 类型 | 是否必选 |
+| --- | --- | --- | --- | --- |
+| Delete | 无 | 包含 DELETE Multiple Objects 操作的所有请求信息 | Container | 是 |
 
 **Container 节点 Delete 的内容：**
 
-| 节点名称（关键字） | 父节点 | 描述                                                         | 类型      | 是否必选 |
-| ------------------ | ------ | ------------------------------------------------------------ | --------- | -------- |
-| Quiet              | Delete | 布尔值，默认为 false <br><li>true 为使用 Quiet 模式，在响应中仅包含删除失败的对象信息和错误信息<br><li>false 为使用 Verbose 模式，在响应中包含每个对象的删除结果 | boolean   | 是       |
-| Object             | Delete | 单个要删除的目标对象的信息                                   | Container | 是       |
+| 节点名称（关键字） | 父节点 | 描述 | 类型 | 是否必选 |
+| --- | --- | --- | --- | --- |
+| Quiet | Delete | 布尔值，默认为 false <br><li>true 为使用 Quiet 模式，在响应中仅包含删除失败的对象信息和错误信息<br><li>false 为使用 Verbose 模式，在响应中包含每个对象的删除结果| boolean | 是 |
+| Object | Delete | 单个要删除的目标对象的信息 | Container | 是 |
 
 **Container 节点 Object 的内容：**
 
-| 节点名称（关键字）                                           | 父节点        | 描述                                                         | 类型   | 是否必选 |
-| ------------------------------------------------------------ | ------------- | ------------------------------------------------------------ | ------ | -------- |
-| Key&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Delete.Object | 要删除的目标对象的对象键                                     | string | 是       |
-| VersionId                                                    | Delete.Object | 当启用版本控制并且要删除对象的指定版本时需指定该元素，值为要删除的版本 ID。若未开启版本控制或开启版本控制但需要插入删除标记，则无需指定该元素 | string | 是       |
+| 节点名称（关键字） | 父节点 | 描述 | 类型 | 是否必选 |
+| --- | --- | --- | --- | --- |
+| Key&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Delete.Object | 要删除的目标对象的对象键 | string | 是 |
+| VersionId | Delete.Object | 当启用版本控制并且要删除对象的指定版本时需指定该元素，值为要删除的版本 ID。若未开启版本控制或开启版本控制但需要插入删除标记，则无需指定该元素 | string | 是 |
 
 ## 响应
 
@@ -86,9 +89,9 @@ Authorization: Auth String
 
 #### 响应体
 
-请求成功，返回 **application/xml** 数据，包含删除结果信息。
+查询成功，返回 **application/xml** 数据，包含删除结果信息。
 
-```xml
+```shell
 <DeleteResult>
 	<Deleted>
 		<Key>string</Key>
@@ -116,34 +119,34 @@ Authorization: Auth String
 
 具体的节点描述如下：
 
-| 节点名称（关键字） | 父节点 | 描述                                        | 类型      |
-| ------------------ | ------ | ------------------------------------------- | --------- |
-| DeleteResult       | 无     | 保存 DELETE Multiple Objects 结果的所有信息 | Container |
+| 节点名称（关键字） | 父节点 | 描述 | 类型 |
+| --- | --- | --- | --- |
+| DeleteResult | 无 | 保存 DELETE Multiple Objects 结果的所有信息 | Container |
 
 **Container 节点 DeleteResult 的内容：**
 
-| 节点名称（关键字） | 父节点       | 描述                                                        | 类型      |
-| ------------------ | ------------ | ----------------------------------------------------------- | --------- |
-| Deleted            | DeleteResult | 单个删除成功的对象条目，仅当使用 Verbose 模式才会返回该元素 | Container |
-| Error              | DeleteResult | 单个删除失败的对象条目                                      | Container |
+| 节点名称（关键字） | 父节点 | 描述 | 类型 |
+| --- | --- | --- | --- |
+| Deleted | DeleteResult | 单个删除成功的对象条目，仅当使用 Verbose 模式才会返回该元素 | Container |
+| Error | DeleteResult | 单个删除失败的对象条目 | Container |
 
 **Container 节点 Deleted 的内容：**
 
-| 节点名称（关键字）    | 父节点               | 描述                                                         | 类型    |
-| --------------------- | -------------------- | ------------------------------------------------------------ | ------- |
-| Key                   | DeleteResult.Deleted | 删除成功的对象的对象键                                       | string  |
-| DeleteMarker          | DeleteResult.Deleted | 仅当对该对象的删除创建了一个删除标记，或删除的是该对象的一个删除标记时才返回该元素，布尔值，固定为 true | boolean |
-| DeleteMarkerVersionId | DeleteResult.Deleted | 仅当对该对象的删除创建了一个删除标记，或删除的是该对象的一个删除标记时才返回该元素，值为创建或删除的删除标记的版本 ID | string  |
-| VersionId             | DeleteResult.Deleted | 删除成功的版本 ID，仅当请求中指定了要删除对象的版本 ID 时才返回该元素 | string  |
+| 节点名称（关键字） | 父节点 | 描述 | 类型 |
+| --- | --- | --- | --- |
+| Key | DeleteResult.Deleted | 删除成功的对象的对象键 | string |
+| DeleteMarker | DeleteResult.Deleted | 仅当对该对象的删除创建了一个删除标记，或删除的是该对象的一个删除标记时才返回该元素，布尔值，固定为 true | boolean |
+| DeleteMarkerVersionId | DeleteResult.Deleted | 仅当对该对象的删除创建了一个删除标记，或删除的是该对象的一个删除标记时才返回该元素，值为创建或删除的删除标记的版本 ID | string |
+| VersionId | DeleteResult.Deleted | 删除成功的版本 ID，仅当请求中指定了要删除对象的版本 ID 时才返回该元素 | string |
 
 **Container 节点 Error 的内容：**
 
-| 节点名称（关键字） | 父节点             | 描述                                                         | 类型   |
-| ------------------ | ------------------ | ------------------------------------------------------------ | ------ |
-| Key                | DeleteResult.Error | 删除失败的对象的对象键                                       | string |
-| VersionId          | DeleteResult.Error | 删除失败的版本 ID，仅当请求中指定了要删除对象的版本 ID 时才返回该元素 | string |
-| Code               | DeleteResult.Error | 删除失败的错误码，用来定位唯一的错误条件和确定错误场景       | string |
-| Message            | DeleteResult.Error | 删除失败的具体错误信息                                       | string |
+| 节点名称（关键字） | 父节点 | 描述 | 类型 |
+| --- | --- | --- | --- |
+| Key | DeleteResult.Error | 删除失败的对象的对象键 | string |
+| VersionId | DeleteResult.Error | 删除失败的版本 ID，仅当请求中指定了要删除对象的版本 ID 时才返回该元素 | string |
+| Code | DeleteResult.Error | 删除失败的错误码，用来定位唯一的错误条件和确定错误场景 | string |
+| Message | DeleteResult.Error | 删除失败的具体错误信息 | string |
 
 #### 错误码
 
@@ -155,7 +158,7 @@ Authorization: Auth String
 
 #### 请求
 
-```plaintext
+```shell
 POST /?delete HTTP/1.1
 Host: examplebucket-1250000000.cos.ap-beijing.myqcloud.com
 Date: Tue, 20 Aug 2019 11:59:35 GMT
@@ -178,7 +181,7 @@ Connection: close
 
 #### 响应
 
-```plaintext
+```shell
 HTTP/1.1 200 OK
 Content-Type: application/xml
 Content-Length: 144
@@ -201,7 +204,7 @@ x-cos-request-id: NWQ1YmUwYTdfM2FiMDJhMDlfYzczN18zMGM1****
 
 #### 请求
 
-```plaintext
+```shell
 POST /?delete HTTP/1.1
 Host: examplebucket-1250000000.cos.ap-beijing.myqcloud.com
 Date: Tue, 20 Aug 2019 12:12:26 GMT
@@ -224,7 +227,7 @@ Connection: close
 
 #### 响应
 
-```plaintext
+```shell
 HTTP/1.1 200 OK
 Content-Type: application/xml
 Content-Length: 15
@@ -240,7 +243,7 @@ x-cos-request-id: NWQ1YmUzYWFfMTljMDJhMDlfNTg3ZV8zNDI0****
 
 #### 请求
 
-```plaintext
+```shell
 POST /?delete HTTP/1.1
 Host: examplebucket-1250000000.cos.ap-beijing.myqcloud.com
 Date: Wed, 21 Aug 2019 12:04:03 GMT
@@ -260,7 +263,7 @@ Connection: close
 
 #### 响应
 
-```plaintext
+```shell
 HTTP/1.1 200 OK
 Content-Type: application/xml
 Content-Length: 200
@@ -282,7 +285,7 @@ x-cos-request-id: NWQ1ZDMzMzNfNDhiNDBiMDlfMmIzNzZfMTBh****
 
 #### 请求
 
-```plaintext
+```shell
 POST /?delete HTTP/1.1
 Host: examplebucket-1250000000.cos.ap-beijing.myqcloud.com
 Date: Wed, 21 Aug 2019 11:24:43 GMT
@@ -303,7 +306,7 @@ Connection: close
 
 #### 响应
 
-```plaintext
+```shell
 HTTP/1.1 200 OK
 Content-Type: application/xml
 Content-Length: 140
@@ -324,7 +327,7 @@ x-cos-request-id: NWQ1ZDI5ZmJfNDhiNDBiMDlfMmIzODNfMTA0****
 
 #### 请求
 
-```plaintext
+```shell
 POST /?delete HTTP/1.1
 Host: examplebucket-1250000000.cos.ap-beijing.myqcloud.com
 Date: Wed, 21 Aug 2019 12:04:04 GMT
@@ -345,7 +348,7 @@ Connection: close
 
 #### 响应
 
-```plaintext
+```shell
 HTTP/1.1 200 OK
 Content-Type: application/xml
 Content-Length: 253
@@ -368,7 +371,7 @@ x-cos-request-id: NWQ1ZDMzMzRfYmIwMmEwOV83YTQzXzEyM2Ri****
 
 #### 请求
 
-```plaintext
+```shell
 POST /?delete HTTP/1.1
 Host: examplebucket-1250000000.cos.ap-beijing.myqcloud.com
 Date: Wed, 21 Aug 2019 12:04:05 GMT
@@ -400,7 +403,7 @@ Connection: close
 
 #### 响应
 
-```plaintext
+```shell
 HTTP/1.1 200 OK
 Content-Type: application/xml
 Content-Length: 703

@@ -1,5 +1,4 @@
 ## 接口描述
-
 本接口（DeleteCfsPGroup）用于删除权限组。
 接口请求域名：`cfs.api.qcloud.com`
 
@@ -34,7 +33,7 @@ https://cfs.test.api.qcloud.com/v2/index.php?Action=DeleteCfsPGroup
 
 #### 输出
 
-```plaintext
+```
 {
     "code": 0,
     "message": "",
@@ -44,6 +43,7 @@ https://cfs.test.api.qcloud.com/v2/index.php?Action=DeleteCfsPGroup
         "AppId": 1250000000
     }
 }
+
 ```
 
 

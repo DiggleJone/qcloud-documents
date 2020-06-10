@@ -46,4 +46,3 @@
 	<td>50GB</td>
 	</tr>
 </table>
-

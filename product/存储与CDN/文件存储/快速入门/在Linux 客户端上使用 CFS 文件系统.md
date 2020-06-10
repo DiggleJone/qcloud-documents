@@ -43,21 +43,21 @@ CIFS/SMB | 445 |  telnet 445
 #### 1. 启动 NFS 客户端
 挂载前，请确保系统中已经安装了`nfs-utils`或`nfs-common`，安装方法如下：
 - CentOS：
-```plaintext
+```shell
 sudo yum install nfs-utils
 ```
 - Ubuntu 或 Debian：
-```plaintext
+```shell
 sudo apt-get install nfs-common
 ```
 
 #### 2. 创建待挂载目标目录
 使用下列命令创建待挂载目标目录。
-```plaintext
+```shell
 mkdir <待挂载目标目录>
 ```
 示例：
-```plaintext
+```shell
 mkdir /local/
 mkdir /local/test
 ```
@@ -78,17 +78,17 @@ sudo mount -t nfs -o vers=4.0 <挂载点IP>:/ <待挂载目录>
 
 示例：
 - 挂载 CFS 根目录：
-```plaintext
+```shell
 sudo mount -t nfs -o vers=4.0 10.0.24.4:/ /localfolder
 ```
 - 挂载 CFS 子目录：
-```plaintext
+```shell
 sudo mount -t nfs -o vers=4.0 10.0.24.4:/subfolder /localfolder 
 ```
 
 **NFS v3.0 挂载**
 使用下列命令实现 NFS v3.0 挂载。
-```plaintext
+```shell
 sudo mount -t nfs -o vers=3,nolock,proto=tcp <挂载点IP>:/<fsid> <待挂载目录>
 ```
 - 挂载点IP：指创建文件系统时，自动的生成的挂载点 IP。
@@ -98,21 +98,20 @@ sudo mount -t nfs -o vers=3,nolock,proto=tcp <挂载点IP>:/<fsid> <待挂载目
 >! `<挂载点IP>:/<FSID>` 与 `<待挂载目标目录>`之间有一个空格。
 
 挂载 CFS 子目录示例如下：
-```plaintext
+```shell
 sudo mount -t nfs -o vers=3,nolock,proto=tcp 10.0.24.4:/z3r6k95r /localfolder 
 ```
 
 #### 4. 查看挂载点信息
 挂载完成后，请使用如下命令查看已挂载的文件系统：
-```plaintext
+```shell
 mount -l
 ```
-也可以使用如下 df 命令查看该文件系统的容量信息（注意：执行 df 命令后，系统可能有小概率不显示挂载点、但是实际挂载存在的情况；此时请检查 mount -l 的输出、来确保系统列出所有挂载信息）：
-```plaintext
+也可以使用如下命令查看该文件系统的容量信息：
+```shell
 df -h
 ```
 
->!为避免后续误操作，非特殊需求情况下强烈建议不要对已挂载 CFS 文件系统或其他文件系统的目录重复执行挂载（mount）操作。
 
 ### 挂载 CIFS/SMB 文件系统
 >!CIFS/SMB 协议文件系统公测中，更多信息请参见 [CIFS/SMB公测说明](https://cloud.tencent.com/document/product/582/9553#cifs.2Fsmb-.E5.85.AC.E6.B5.8B.E8.AF.B4.E6.98.8E)。
@@ -120,17 +119,17 @@ df -h
 #### 1. 启动 CIFS 客户端
 挂载前，请确保系统中已经安装了`cifs-utils`，安装方法如下：
 CentOS：
-```plaintext
+```shell
 sudo yum install cifs-utils.x86_64 –y
 ```
 
 #### 2. 创建待挂载目标目录
 使用下列命令创建待挂载目标目录。
-```plaintext
+```shell
 mkdir <待挂载目标目录>
 ```
 示例：
-```plaintext
+```shell
 mkdir /local/
 mkdir /local/test
 ```
@@ -147,36 +146,32 @@ mount -t cifs -o guest //<挂载点IP>/<FSID> /<待挂载目标目录>
 >!`<FSID>`与`/<待挂载目标目录>`之间有一个空格。
 
 示例：
-```plaintext
+```shell
 mount -t cifs -o guest //10.66.168.75/vj3i1135  /local/test
 ```
 
 #### 4. 查看挂载点信息
 挂载完成后，请使用如下命令查看已挂载的文件系统：
-```plaintext
+```shell
 mount -l
 ```
-也可以使用如下 df 命令查看该文件系统的容量信息（注意：执行 df 命令后，系统可能有小概率不显示挂载点、但是实际挂载存在的情况；此时请检查 mount -l 的输出、来确保系统列出所有挂载信息）：
-```plaintext
+也可以使用如下命令查看该文件系统的容量信息：
+```shell
 df -h
 ```
 
-
->!为避免后续误操作，非特殊需求情况下强烈建议不要对已挂载 CFS 文件系统或其他文件系统的目录重复执行挂载（mount）操作。
-
-
 ## 步骤4: 卸载共享目录
 当某些情况下需要卸载共享目录，请使用如下命令。其中 "目录名称" 为根目录或者文件系统的完整路径。
-```plaintext
+```shell
 umount <目录名称>
 ```
 
 示例： 
-```plaintext
+```shell
 umount /local/test
 ```
 
->!执行 df 命令后，系统可能有小概率不显示挂载点、但是实际挂载存在的情况；此时请检查 mount -l 的输出、来确保系统列出所有挂载信息。另外，强烈建议您在重启或关闭客户端前先执行卸载文件系统的操作，以避免引起系统异常。
+>!强烈建议您在重启或关闭客户端前先执行卸载文件系统的操作，以避免引起系统异常。
 
 ## 步骤5: 终止资源
 

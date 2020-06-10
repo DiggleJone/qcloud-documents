@@ -247,4 +247,3 @@ func (t *SimpleChaincode) query(stub shim.ChaincodeStubInterface, args []string)
 	return shim.Success(Avalbytes)
 }
 ```
-

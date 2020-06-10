@@ -31,12 +31,6 @@ tim.setMessageRead(options)
 
 ```javascript
 // 将某会话下所有未读消息已读上报
-let promise = tim.setMessageRead({conversationID: 'C2Cexample'});
-promise.then(function(imResponse) {
-  // 已读上报成功
-}).catch(function(imError) {
-  // 已读上报失败
-  console.warn('setMessageRead error:', imError);
-});
+tim.setMessageRead({conversationID: 'C2Cexample'});
 ```
 
